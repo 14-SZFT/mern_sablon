@@ -24,3 +24,32 @@
 12. Egy `routes` nevű mappa létrehozása a _route_-oknak. Minden egyes _route_-nak külön állománya lesz.
 13. Egy `views` nevű mappa létrehozása a böngészőnek küldendő `.html` állományoknak.
 14. A nem létező _route_-ok kezelése: `app.all('*', (req, res) => {})`.
+
+---
+
+# Middleware-k
+
+1. Függvények a **HTTP request** (_frontend_) és az **API response** (_backend_) között.
+2. Előzetes **request** "feldolgozás".
+3. Plusz funkcionalitások, tulajdonságok hozzáadása az **API**-hoz.
+4. Főleg a következő utasításoknál használjuk:
+    - `app.use(...);`
+    - `app.set(...);`
+    - `app.get(...);` stb. **HTTP request**
+5. Háromfajta **middleware** létezik:
+    - Beépített (_built-in_)
+    - Harmadik féltől származó (_third-party_)
+        - `express.static()` => `app.use(express.static());`
+        - `express.json()` => `app.use(express.json());`,
+        - `cookieParser()` => `app.use(cookieParser());`
+    - Egyéni (_custom_)
+6. A **backend** mappában a parancssorban kiadni az `npm install dotenv date-fns uuid` utasítást.
+7. Egy `logs` nevű mappa létrehozása az alkalmazás futása során történő események naplózásához.
+8. Egy `middlewares` nevű mappa létrehozása az egyéni (_custom_) **middleware**-k számára.
+9. A `middlewares` nevű mappában létrehozni a `logger.js` nevű állományt a naplózáshoz.
+10. A `middlewares` nevű mappában létrehozni az `errorHandler.js` nevű állományt a hibaesemények naplózásához.
+11. A **backend** mappában a parancssorban kiadni az `npm install cookie-parser cors` utasítást.
+12. Egy `config` nevű mappa létrehozása az alkalmazás "környezetének" beállításához.
+13. A `config` nevű mappában létrehozni az `allowedOrigins.js` nevű állományt azon **URL**-k számára, amiknek megengedjük, hogy hozzáférjenek az alkalmazásunkhoz.
+14. A `config` nevű mappában létrehozni a `corsOptions.js` nevű állományt, amelyben lekezeljük a **CORS**-szal kapcsolatos problémákat.
+15. A `server.js` állományban a megfelelő beállítások elvégzése.

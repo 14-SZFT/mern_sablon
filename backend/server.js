@@ -1,12 +1,29 @@
-// Harmadik féltől származó modulok (third-party modules) - npm. Telepíteni kell őket.
+// Harmadik féltől származó (third-party modules) modulok - npm. Telepíteni kell őket.
+require('dotenv').config();
 const express = require('express');
+const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
 // Common Core modulok. CommonJS tartja karban őket. Nem kell őket telepíteni.
 const path = require('path');
 
+// Saját (common) modulok. Hivatkozás: './eleresi_ut/fileNev' formában. Esetleg dekonstrukció { ... }.
+const { logger } = require('./middlewares/logger');
+const errorHandler = require('./middlewares/errorHandler');
+const corsOptions = require('./config/corsOptions');
+
 // Az alkalmazás szerverének konfigurációjának beállítása.
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3500;
+
+// Middleware-k használata
+// Saját (custom)
+app.use(logger);
+
+// Harmadik féltől származó (third-party) middleware-k
+app.use(cors(corsOptions));
+app.use(express.json());
+app.use(cookieParser());
 
 // Route-okhoz tartozó statikus mappák létrehozása.
 app.use('/', express.static(path.join(__dirname, 'public')));
@@ -26,6 +43,10 @@ app.all('*', (req, res) => {
         res.type('txt').send('404 Not Found');
     }
 });
+
+// Middleware-k használata
+// Saját (custom)
+app.use(errorHandler);
 
 // Az alkalmazás szerverének futtatása.
 app.listen(PORT, () => {
