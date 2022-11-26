@@ -3,14 +3,19 @@ require('dotenv').config();
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const mongoose = require('mongoose');
 
 // Common Core modulok. CommonJS tartja karban őket. Nem kell őket telepíteni.
 const path = require('path');
 
 // Saját (common) modulok. Hivatkozás: './eleresi_ut/fileNev' formában. Esetleg dekonstrukció { ... }.
-const { logger } = require('./middlewares/logger');
+const { logger, logEvents } = require('./middlewares/logger');
 const errorHandler = require('./middlewares/errorHandler');
 const corsOptions = require('./config/corsOptions');
+const connectBD = require('./config/dbConnect');
+
+// Megpróbálni csatlakozni az adatbázishoz.
+connectBD();
 
 // Az alkalmazás szerverének konfigurációjának beállítása.
 const app = express();
@@ -48,7 +53,21 @@ app.all('*', (req, res) => {
 // Saját (custom)
 app.use(errorHandler);
 
-// Az alkalmazás szerverének futtatása.
-app.listen(PORT, () => {
-    console.log(`A szerver fut: http://localhost:${PORT}`);
+// Ha sikeresen csatlakoztunk az adatbázishoz.
+mongoose.connection.once('open', () => {
+    console.log('Sikeres csatlakozás az adatbázishoz!');
+
+    // Az alkalmazás szerverének futtatása.
+    app.listen(PORT, () => {
+        console.log(`A szerver fut: http://localhost:${PORT}`);
+    });
+});
+
+// És ha nem.
+mongoose.connection.on('error', (err) => {
+    console.log(err);
+    logEvents(
+        `${err.no}: ${err.code}\t${err.syscall}\t${err.hostname}\n`,
+        'mongoErrLog.log'
+    );
 });

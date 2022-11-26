@@ -53,3 +53,19 @@
 13. A `config` nevű mappában létrehozni az `allowedOrigins.js` nevű állományt azon **URL**-k számára, amiknek megengedjük, hogy hozzáférjenek az alkalmazásunkhoz.
 14. A `config` nevű mappában létrehozni a `corsOptions.js` nevű állományt, amelyben lekezeljük a **CORS**-szal kapcsolatos problémákat.
 15. A `server.js` állományban a megfelelő beállítások elvégzése.
+
+---
+
+# MongoDB és Mongoose
+
+1. A **MongoDB** egy _NoSQL_ adatbázis, azaz itt gyűjtemények (_collection_) és dokumentumok (_document_) vannak.
+2. A **backend** mappában a parancssorban kiadni az `npm install mongoose` utasítást.
+3. Egy `models` nevű mappa létrehozása az adatbázisban szereplő gyűjteményekhez (_collection_).
+4. A `models` mappában létrehozni egy `User.js` nevű állományt az alkalmazásunkat használóknak (eladók, vásárlók stb.).
+5. A **backend** mappában a parancssorban kiadni az `npm install validator` utasítást. Ezt a `user` objektum különböző tulajdonságainak igazolásához fogjuk használni.
+6. A `models` mappában létrehozni egy `Good.js` nevű állományt a termékeknek.
+7. A `models` mappában létrehozni egy `Type.js` nevű állományt a terméktípusoknak.
+8. A `models` mappában létrehozni egy `Buying.js` nevű állományt a vásárlásoknak.
+9. A **backend** mappában a parancssorban kiadni az `npm install mongoose-sequence` utasítást. Ezt a `buying` objektumok automatikus számozásához fogjuk használni.
+10. A `config` mappában létrehozni egy `dbConnect.js` nevű állományt az adatbázishoz való csatlakozáshoz.
+11. A `server.js` állományban a megfelelő beállítások elvégzése.
